@@ -1,0 +1,44 @@
+body {
+    background-image: url("images/topography.png");
+    font-family: 'Courier Prime', monospace;
+}
+
+nav {
+    background-color: #333333;
+    height: 40px;
+    padding-left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.links {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around
+}
+
+main {
+    padding: 0% 10% 0% 10%;
+}
+
+#logo {
+    display: inline-block;
+}
+
+
+.pinkColored,a {
+    color: #ff0099;
+}
+
+
+
+a {
+    color: #ff0099;
+    font-size: 17px;
+}
+
+.middleText, .separator {
+    text-align: center;
+}

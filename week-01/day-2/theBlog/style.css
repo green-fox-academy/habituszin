@@ -1,0 +1,38 @@
+header {
+    background-color: grey;
+    padding-left: 20%;
+    height: 36px;
+    display: flex;
+    align-items: center;
+}
+
+body {
+    margin: 0%;
+    font-family: 'Roboto', sans-serif;
+}
+
+main {
+    margin: 0% 20%;
+}
+
+.randomPost {
+    border: 1px solid black;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.postTitle {
+    margin: 0;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+}
+ 
+.label {
+    margin-top: 20px;
+}
+
+.btn {
+    width: 10%;
+}
