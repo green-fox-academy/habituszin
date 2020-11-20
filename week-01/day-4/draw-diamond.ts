@@ -28,7 +28,7 @@ for (let i = 0; i < lineCount; i ++) {
   } else {
     for (let j = 0; j < i; j++) {
       starsLine += ' ';
-    }for (let k = 0; k <= (lineCount - i) ; k++) {
+    }for (let k = 1; k < (lineCount - i) * 2 ; k++) {
       starsLine += '*';
     }
     console.log(starsLine);
