@@ -7,3 +7,7 @@
 //	   -  do it with creating a new temp array and a loop
 // -  Print the elements of the reversed `numbers`
 let numbers: number[] = [3, 4, 5, 6, 7];
+
+let newNumbers: number[] = numbers.reverse();
+
+console.log(newNumbers);
