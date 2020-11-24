@@ -32,7 +32,7 @@ names.splice(1, 1);
 
 for (let i: number = 0; i < names.length; i++) {
   console.log(names[i]);
-;}
+}
 
 names.splice(0, names.length);
 
