@@ -38,7 +38,7 @@ let rectangles = {
 function drawRectangle(inputData) {
   for (const key in inputData) {
     ctx.fillStyle = inputData[key].color;
-    ctx.fillRect(inputData[key].x, inputData[key].y, inputData[key].x + inputData[key].horizontal, inputData[key].y + inputData[key].vertical);
+    ctx.fillRect(inputData[key].x, inputData[key].y, inputData[key].horizontal, inputData[key].vertical);
   }
 }
 
