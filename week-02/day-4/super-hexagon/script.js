@@ -17,20 +17,20 @@ function drawHexagon(long, beginingX, beginingY) {
   ctx.lineTo(beginingX, beginingY);
   ctx.stroke();
 }
+let x = 50;
+let y = 300;
+let secondY;
 
-// Drak super hexagon
+
+// Draw super hexagon
 function drawSuperHexagon(side, count) {
   let height = side * Math.cos(Math.PI / 6);
-  let x = 50;
-  let y = 300;
   let k = count;
-  let l = k + 1;
-  let asd;
   for (let i = 0; i < count; i++) {
     x += side * 1.5;
     y = 300 + i * height;
     if (k <= (count * 2 - 1)) {
-      asd = y;
+      secondY = y;
       for (let j = 0; j < k; j++) {
         drawHexagon(side, x, y);
         y -= height * 2;
@@ -38,18 +38,17 @@ function drawSuperHexagon(side, count) {
       k++;
     }
   }
-  asd -= height;
+  secondY -= height;
+  k -= 2;
   for (let i = 0; i < count - 1; i++) {
     x += side * 1.5;
-    y = asd - i * height;
-    for (let j = 0; j <= l; j++) {
+    y = secondY - i * height;
+    for (let j = 0; j < k; j++) {
       drawHexagon(side, x, y);
       y -= height * 2;
     }
-    l--;
-
+    k--;
   }
-
 }
 
 
