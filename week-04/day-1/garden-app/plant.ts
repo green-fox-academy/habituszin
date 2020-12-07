@@ -20,7 +20,7 @@ export class Plant {
   }
 
   public set waterLevel(quantity: number) {
-    this._waterLevel += quantity;
+    this._waterLevel += (quantity * this._waterUse);
   }
 
   public waterNeed(): void{
