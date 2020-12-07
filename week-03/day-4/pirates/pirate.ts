@@ -18,7 +18,7 @@ export class Pirate {
   }
 
   public drinkSomeRum(): void {
-    if (this._life = true) {
+    if (this._life) {
       if (this._rumLevel > 5) {
         this._sleep = true;
       } else {
@@ -31,7 +31,7 @@ export class Pirate {
   }
 
   public howsItGoingMate(): void {
-    if (this._life = true) {
+    if (this._life) {
       if (this._rumLevel < 5) {
         console.log('Pour me anudder!');
       } else {
