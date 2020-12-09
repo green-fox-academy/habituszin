@@ -32,3 +32,23 @@ test('test use', t => {
   t.equal(actual, extend);
   t.end();
 })
+
+test('test use when input is null', t => {
+  let sharpie = new Sharpie('yellow', 5);
+  sharpie.use(null);
+  let actual = sharpie.inklevel;
+  let extend = 100;
+
+  t.equal(actual, extend);
+  t.end();
+})
+
+test('test use when input is undifined', t => {
+  let sharpie = new Sharpie('yellow', 5);
+  sharpie.use(undefined);
+  let actual = sharpie.inklevel;
+  let extend = 100;
+
+  t.equal(actual, extend);
+  t.end();
+})
