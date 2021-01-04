@@ -1,0 +1,37 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+.page {
+  width: 1000px;
+}
+
+.site{
+  height: 500px;
+  display: flex;
+}
+.main {
+  background: yellow;
+  margin: 0px;
+  height:500px;
+  flex-grow: 4;
+}
+.heading {
+  background: purple;
+  height: 50px;
+  padding: 0px;
+  display: flex;
+  list-style-type: none;
+  margin: 0px;
+}
+.item {
+  background: cyan;
+  width: 150px;
+  height: 30px;
+  margin: 10px;
+}
+.sideContent {
+  background: green;
+  flex-grow: 1;
+  height: 100%;
+}
