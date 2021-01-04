@@ -1,0 +1,47 @@
+body {
+  margin: 0px;
+}
+
+.navbar {
+  background: purple;
+  height: 50px;
+  list-style: none;
+  display: flex;
+  margin: 0px;
+  padding-left: 5%;
+  align-items: center;
+}
+
+.item {
+  background: cyan;
+  width: 100px;
+  height: 30px;
+  margin-right: 10px;
+}
+.page {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main {
+  display: flex;
+  height: 500px;
+  margin-top: 10px;
+}
+
+.green {
+  background: green;
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.yellow {
+  background: yellow;
+  flex-grow: 3;
+}
+
+.footer {
+  background: lightgray;
+  height: 50px;
+  margin-top: 10px;
+}
