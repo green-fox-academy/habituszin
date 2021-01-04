@@ -10,15 +10,18 @@ function drawCircle(x, y, r) {
 }
 
 function drawFraclatCircles(beginingX, beginingY, radius) {
-  let height = (radius / 2)  * Math.sin(Math.PI / 4);
-  if (radius < 10) {
-    return
-  }
-  drawCircle(beginingX, beginingY, radius);
-  drawFraclatCircles(beginingX, beginingY - radius /2, radius / 2);
-  drawFraclatCircles(beginingX + height, beginingY + height, radius / 2);
-  drawFraclatCircles(beginingX - height, beginingY + height, radius / 2);
-
+  setTimeout(function() {
+    
+    let height = (radius / 2)  * Math.sin(Math.PI / 4);
+    if (radius < 10) {
+      return
+    }
+    drawCircle(beginingX, beginingY, radius);
+    drawFraclatCircles(beginingX, beginingY - radius /2, radius / 2);
+    drawFraclatCircles(beginingX + height, beginingY + height, radius / 2);
+    drawFraclatCircles(beginingX - height, beginingY + height, radius / 2);
+    
+  }, 1000);
 }
 
 drawFraclatCircles(300,200,200);

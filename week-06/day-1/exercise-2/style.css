@@ -1,0 +1,13 @@
+.yellow-box{
+  width: 500px;
+  height: 300px;
+  display: flex;
+  background: #ffd62a;
+  justify-content: center;
+  align-items: center;
+}
+.purple-box {
+  width: 100px;
+  height: 100px;
+  background:  #b02afe;
+}

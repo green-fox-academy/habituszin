@@ -15,14 +15,17 @@ function drawTriangle(long, beginingX, beginingY) {
 
 
 function drawFraclatTriangle(side, startX, startY) {
-  if (side < 1){
-    return
-  }
-  let height = side * Math.cos(Math.PI / 6);
-  drawTriangle(side, startX, startY);
-  drawFraclatTriangle(side / 2, startX - side / 2, startY - height / 4);
-  drawFraclatTriangle(side / 2, startX + side / 2, startY - height / 4);
-  drawFraclatTriangle(side / 2, startX, startY + height * (3/4));
+  setTimeout(function() {
+    
+    if (side < 1){
+      return
+    }
+    let height = side * Math.cos(Math.PI / 6);
+    drawTriangle(side, startX, startY);
+    drawFraclatTriangle(side / 2, startX - side / 2, startY - height / 4);
+    drawFraclatTriangle(side / 2, startX + side / 2, startY - height / 4);
+    drawFraclatTriangle(side / 2, startX, startY + height * (3/4));
+  }, 1000);
   
 }
 

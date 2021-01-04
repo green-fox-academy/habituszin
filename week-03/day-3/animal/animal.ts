@@ -1,6 +1,6 @@
 'use strict';
 
-class Animal {
+export class Animal {
   private _hunger: number;
   private _thirst: number;
 
@@ -8,6 +8,14 @@ class Animal {
     this._hunger = 50;
     this._thirst = 50;
   };
+
+  public get hunger(): number {
+    return this._hunger;
+  }
+
+  public get thirst(): number {
+    return this._thirst;
+  }
 
   public eat(): void {
     this._hunger--;
@@ -27,15 +35,3 @@ class Animal {
     console.log(this._hunger);
   }
 }
-
-let dog = new Animal;
-for (let i: number = 0; i < 7; i++) {
-  dog.drink();
-  dog.eat();
-}
-
-for (let i: number = 0; i < 3; i++) {
-  dog.play();
-}
-
-dog.animalStatus();
