@@ -1,0 +1,49 @@
+body {
+  margin: 0px;
+}
+
+.navbar {
+  background: purple;
+  width: 100%;
+  height: 50px;
+  list-style: none;
+  display: flex;
+  margin-top: 0px;
+  padding-left: 5%;
+  align-items: center;
+  position: fixed;
+}
+
+.item {
+  background: cyan;
+  width: 100px;
+  height: 30px;
+  margin-right: 10px;
+}
+.page {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main {
+  padding-top: 60px;
+  display: flex;
+  height: 2000px;
+}
+
+.green {
+  background: green;
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.yellow {
+  background: yellow;
+  flex-grow: 3;
+}
+
+.footer {
+  background: lightgray;
+  height: 50px;
+  margin-top: 10px;
+}
