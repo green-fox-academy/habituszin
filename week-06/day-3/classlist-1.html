@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Workshop: ClassList</title>
+    <style>
+      .red {
+        color: red;
+      }
+      .balloon {
+        background-color: lime;
+        border-radius: 100%;
+      }
+      .pear {
+        background: lime;
+        padding: 2rem;
+        text-decoration: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="apple">apple</p>
+    <p class="balloon">balloon</p>
+    <p class="cat red-dot">cat</p>
+    <p>dolphin</p>
+
+    <!-- You can work in the html or in a separate js file. Like:
+    <script>
+      If the fourth p has a 'dolphin' class, replace apple's content with 'pear'
+      If the first p has an 'apple' class, replace cat's content with 'dog'
+      Make apple red by adding a .red class
+      Make balloon less balloon-like (change its shape)
+    </script>
+    OR
+    <script src="classlist-1.js"></script> -->
+    <script>
+      let body = document.getElementsByTagName('p');
+      if (body[3].getAttribute('class') == 'dolphin') {
+        body[0].innerHTML = 'pear';
+      }
+      
+      if (body[0].getAttribute('class') == 'apple') {
+        body[2].innerHTML = 'dog';
+      }
+
+      body[0].setAttribute('class', 'red');
+
+      body[1].setAttribute('style', 'width : 50px; height : 60px')
+
+    </script>
+  </body>
+</html>
