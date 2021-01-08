@@ -48,18 +48,23 @@ let choosenPictureId = 0;
 let middleImage = document.getElementById('middleImage');
 let imgName = document.getElementById('name');
 let imgText = document.getElementById('text');
-
+let miniImages = document.getElementById('miniImages');
+let leftButton = document.getElementById('leftButton');
+let rightButton = document.getElementById('rightButton');
 
 function setImage() {
   middleImage.setAttribute('src', database[choosenPictureId].url);
   imgName.innerHTML = database[choosenPictureId].name;
   imgText.innerHTML = database[choosenPictureId].title;
+  for (let i = 0; i < database.length; i++) {
+    if (i == choosenPictureId) {
+      miniImages.children[i].children[1].setAttribute('style', 'visibility: visible')
+    } else {
+      miniImages.children[i].children[1].setAttribute('style', 'visibility: hiden')
+    } 
+  }
 };
 
-setImage();
-
-let leftButton = document.getElementById('leftButton');
-let rightButton = document.getElementById('rightButton');
 
 leftButton.onclick = () => {
   choosenPictureId--;
@@ -79,12 +84,28 @@ rightButton.onclick = () => {
   setImage();
 };
 
-let miniImages = document.getElementById('miniImages');
+
+
+function changeImg(num) {
+  choosenPictureId = num;
+  setImage();
+}
 
 for (let i = 0; i < database.length; i++) {
+  let div = document.createElement('div');
+  let p = document.createElement('p');
   let miniImage = document.createElement('img');
+  let triangle = document.createElement('div');
+  triangle.setAttribute('class', 'triangle');
+  div.setAttribute('class', 'miniDiv')
+  p.innerHTML = database[i].name;
+  p.setAttribute('class', 'title')
   miniImage.setAttribute('src', database[i].url);
   miniImage.setAttribute('class', 'miniImg');
-  miniImages.appendChild(miniImage);
-  
+  miniImage.setAttribute('onclick', `changeImg(${i})`);
+  div.appendChild(p);
+  div.appendChild(triangle);
+  div.appendChild(miniImage);
+  miniImages.appendChild(div);
 }
+setImage();
