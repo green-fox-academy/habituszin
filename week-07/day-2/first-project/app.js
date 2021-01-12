@@ -4,10 +4,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const { json } = require('body-parser');
 app.use(express.static('assets'));
+app.use(bodyParser.json())
 const port = 3000
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -54,15 +53,17 @@ app.get('/appenda/:appendable', (req, res) => {
 
 app.post('/dountil/:action', (req, res) => {
   let action = req.params.action;
+  let until = req.body.until;
+  console.log(until);
   if (action === 'sum') {
     let count = 0;
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= until; i++) {
       count += i;
     }
     res.status(200).json({ 'result': count })
   } else if (action === 'factor') {
     let count = 1;
-    for (let i = 2; i <= 4; i++) {
+    for (let i = 2; i <= until; i++) {
       count *= i;
     }
     res.status(200).json({ 'result': count })
