@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Booksotre</h1>
+  <table>
+    <tr style="font-size:150%;">
+      <% for (let i=0; i < tableTitle.length; i++) { %>
+        <th>
+          <%= tableTitle[i] %>
+        </th>
+        <% } %>
+    </tr>
+    <% for (let i=0; i < Object.keys(request).length; i++) { %>
+      <tr>
+        <% for (let j=0; j < Object.keys(request[i]).length; j++) { %>
+          <th>
+            <%= Object.values(request[i])[j] %>
+          </th>
+          <% } %>
+      </tr>
+      <% } %>
+  </table>
+<h2>Search:</h2>
+  <form action="/books">
+    <label for="cate_descrip">Category:</label><br>
+    <input type="text" id="fname" name="cate_descrip"><br>
+    <label for="pub_name">Publisher:</label><br>
+    <input type="text" id="fname" name="pub_name"><br>
+    <label for="plt">Price lower:</label><br>
+    <input type="number" id="lname" name="plt"><br>
+    <label for="pgt">Price greater:</label><br>
+    <input type="number" id="lname" name="pgt"><br><br>
+    <input type="submit" value="Search" >
+  </form> 
+</body>
+
+</html>
