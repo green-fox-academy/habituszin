@@ -50,4 +50,17 @@ app.get('/posts', (req, res) => {
   });
 });
 
+app.post('/newpost', (req, res) => {
+  conn.query(`INSERT INTO posts (title, url, vote_numbers, date, creator_id)
+  VALUES ((?), (?), 0, (?), (?))`, [req.body.title, req.body.url, Date.now(), req.body.creator_id], (err, rows) => {
+    if (err) {
+      console.log(err.toString());
+      res.status(500).json({ 'error': 'database error' });
+      return;
+    }
+    console.log(rows);
+    res.status(200).json(rows);
+  })
+});
+
 app.listen(port);
