@@ -1,0 +1,15 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#alcohol-tipes {
+  list-style: none;
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  padding: 0px;
+}
+
+a {
+  text-decoration: none;
+}

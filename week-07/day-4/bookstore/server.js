@@ -53,7 +53,7 @@ app.get('/books', (req, res) => {
       result = result.filter(element => element.book_price > pgt);
     }
 
-    res.render('books', { request: result, tableTitle: title })
+    res.status(200).render('books', { request: result, tableTitle: title })
   });
 });
 
