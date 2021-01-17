@@ -35,11 +35,9 @@ app.get('/', (req, res) => {
 }); */
 
 app.get('/posts', (req, res) => {
-  conn.query(`SELECT posts.id, title, url, date, vote_numbers, name, vote 
+  conn.query(`SELECT posts.id, title, url, date, vote_numbers, name
   FROM posts 
-  INNER JOIN users ON posts.creator_id = users.id 
-  INNER JOIN votes ON posts.id = votes.post_id 
-  WHERE votes.user_id = (?);`, [req.body.user], (err, rows) => {
+  INNER JOIN users ON posts.creator_id = users.id ;`, (err, rows) => {
     if (err) {
       console.log(err.toString());
       res.status(500).json({ 'error': 'database error' });
@@ -50,7 +48,7 @@ app.get('/posts', (req, res) => {
   });
 });
 
-app.post('/newpost', (req, res) => {
+app.post('/posts', (req, res) => {
   conn.query(`INSERT INTO posts (title, url, vote_numbers, date, creator_id)
   VALUES ((?), (?), 0, (?), (?))`, [req.body.title, req.body.url, Date.now(), req.body.creator_id], (err, rows) => {
     if (err) {
@@ -62,5 +60,45 @@ app.post('/newpost', (req, res) => {
     res.status(200).json(rows);
   })
 });
+
+app.put('/posts/:id/upvote', (req, res) => {
+  conn.query(`UPDATE posts SET vote_numbers = vote_numbers + 1 WHERE posts.id = (?)`, [req.params.id], (err, rows) => {
+    if (err) {
+      console.log(err.toString());
+      res.status(500).json({ 'error': 'database error' });
+      return;
+    }
+    conn.query(`SELECT posts.id, title, url, date, vote_numbers
+    FROM posts 
+    WHERE posts.id = (?);`, [req.params.id], (err, rows) => {
+      if (err) {
+        console.log(err.toString());
+        res.status(500).json({ 'error': 'database error' });
+        return;
+      }
+      res.status(200).json(rows);
+    })
+  })
+})
+
+app.put('/posts/:id/downvote', (req, res) => {
+  conn.query(`UPDATE posts SET vote_numbers = vote_numbers - 1 WHERE posts.id = (?)`, [req.params.id], (err, rows) => {
+    if (err) {
+      console.log(err.toString());
+      res.status(500).json({ 'error': 'database error' });
+      return;
+    }
+    conn.query(`SELECT posts.id, title, url, date, vote_numbers
+    FROM posts 
+    WHERE posts.id = (?);`, [req.params.id], (err, rows) => {
+      if (err) {
+        console.log(err.toString());
+        res.status(500).json({ 'error': 'database error' });
+        return;
+      }
+      res.status(200).json(rows);
+    })
+  })
+})
 
 app.listen(port);
