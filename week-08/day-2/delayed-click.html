@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<button>Click me</button>
+
+<body>
+  <script>
+    let button = document.querySelector('button');
+    let body = document.querySelector('body');
+    let text = document.createElement('p');
+    text.innerHTML = '2 seconds ellapsed';
+
+    button.addEventListener('click', (event) => {
+      setTimeout(() =>{
+        body.appendChild(text)
+      }, 2000)
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>Click me</button>
+  <script>
+    let button = document.querySelector('button');
+    let body = document.querySelector('body');
+    let text = document.createElement('p');
+    text.innerHTML = '5 seconds elapsed and clicked 3 times';
+    let count = 0;
+
+    window.addEventListener('load', (event) => {
+      button.addEventListener('click', () => {
+        count++;
+      })
+      setTimeout(() => {
+        if (count == 0) {
+          button.addEventListener('click', () => {
+            if (count == 3) {
+              body.appendChild(text);
+            }
+          })
+        } else {
+          return
+        }
+      }, 5000)
+    })
+  </script>
+</body>
+
+</html>
