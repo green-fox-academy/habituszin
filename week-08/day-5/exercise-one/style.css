@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+}
+
+.side {
+  background-color: orange;
+}
+
+.middle {
+  background-color: greenyellow;
+}
+
+.element {
+  color: white;
+  text-align: center;
+  padding: 50px;
+  border: 5px solid lightslategrey;
+}
