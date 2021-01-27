@@ -1,0 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+table{
+  border-collapse: collapse;
+  width: 400px;
+  border: 20px solid blueviolet;
+}
+
+th{
+  background: #2f4f4f;
+  color: white;
+}
+
+td{
+  color: #2f4f4f;
+}
+
+td, th {
+  border: 1px solid blueviolet;
+  text-align: left;
+  padding: 10px 0px 10px 10px;
+}
+
+tr:nth-child(2n + 1) {
+  background-color: #919ee7a9;
+}
