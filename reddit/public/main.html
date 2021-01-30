@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
   <title>Reddit Clone</title>
 </head>
+
 <body>
-  <h1>Bejelentkezés</h1>
+  <div class="container">
+    <header>
+      <h1>SPACE</h1>
+    </header>
+    <main>
+    </main>
+    <side>
+      <div id="userField">
+        <form>
+          <label id="inputName" for="name">
+            <input type="text" required placeholder="Name">
+          </label>
+          <label id="inputPass" for="password">
+            <input type="password" required placeholder="Password">
+          </label>
+            <button id="logInButton">Log In</button>
+        </form>
+      </div>
+      <button id="submitNewPost">SUBMIT A NEW POST</button>
+      <p id="joinUs">For creating a new post you don't need registration, but if you want te be part of an amazing group
+        just creat a <strong>FREE</strong> account.</p>
+    </side>
+  </div>
+  <script src="main.js"></script>
 </body>
+
 </html>

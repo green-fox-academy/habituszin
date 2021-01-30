@@ -1,6 +1,5 @@
 'use stirct';
 
-const { json } = require('express');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -17,6 +16,7 @@ let conn = mysql.createConnection({
   database: 'reddit',
 });
 
+let logUsers = [];
 
 conn.connect((err) => {
   if (err) {
@@ -26,26 +26,31 @@ conn.connect((err) => {
   console.log('Connection established');
 });
 
-
-app.get('/posts/login', (req, res) => {
+app.post('/posts/login', (req, res) => {
   let login = Base64.atob(req.headers.authorization.substring(6)).split(':');
 
   let userName = login[0];
   let password = login[1];
-  
+
   conn.query(`SELECT * FROM users WHERE name = (?) AND password = (?);`, [userName, password], (err, rows) => {
     if (err) {
+      console.log(err.toString());
       res.status(500).json({ 'error': 'database error' });
       return;
     }
-    console.log(rows);
     if (rows[0]) {
-      console.log('beléphetsz');
+      logUsers.push(rows[0].id);
+      res.status(200).json({ name: userName, id: rows[0].id });
+
     } else {
-      console.log('nem nyert');
+      res.status(200).json({ error: 'Check your username and password!' })
     }
   })
 });
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/main.html')
+})
 
 app.post('/posts/registration', (req, res) => {
   if (req.body.password != req.body.password_again) {
@@ -54,6 +59,7 @@ app.post('/posts/registration', (req, res) => {
   }
   conn.query(`SELECT name FROM users WHERE name = (?);`, [req.body.name], (err, rows) => {
     if (err) {
+      console.log(err.toString());
       res.status(500).json({ 'error': 'database error' });
       return;
     }
@@ -67,25 +73,51 @@ app.post('/posts/registration', (req, res) => {
   })
 })
 
-app.get('/posts/logout', (req, res) => {
-  res.redirect('/posts')
+app.post('/posts/logout', (req, res) => {
+  let user = req.body.user;
+  logUsers.splice(logUsers.indexOf(user), 1);
+  res.redirect('/');
 })
 
 app.get('/posts', (req, res) => {
-
-  conn.query(`SELECT posts.id, title, url, date, vote_numbers, name
-  FROM posts 
-  INNER JOIN users ON posts.creator_id = users.id;`, (err, rows) => {
+  let user = '';
+  if (req.query.user) {
+    user = req.query.user
+  }
+  conn.query(`SELECT posts.id AS post_id, title, url, date, (SELECT IFNULL(SUM(vote), 0) FROM votes WHERE votes.post_id = posts.id) AS vote_numbers, name AS owner
+    FROM posts
+    LEFT JOIN users ON posts.creator_id = users.id;`, (err, posts) => {
     if (err) {
       console.log(err.toString());
       res.status(500).json({ 'error': 'database error' });
       return;
+    } else if (user != '' && logUsers.includes(user)) {
+      conn.query(`SELECT post_id, users.name, vote 
+      FROM votes
+      JOIN users ON user_id = users.id
+      WHERE users.name = (?);`, [user], (err, votes) => {
+        if (err) {
+          console.log(err.toString());
+          res.status(500).json({ 'error': 'database error' });
+          return;
+        }
+        for (let i = 0; i < posts.length; i++) {
+          for (let j = 0; j < votes.length; j++) {
+            if (posts[i].post_id == votes[j].post_id) {
+              posts[i]['vote'] = votes[j].vote;
+            }
+          }
+        }
+        res.status(200).json(posts);
+      })
+    } else {
+      res.status(200).json(posts);
     }
-    res.status(200).json(rows);
-  });
+  })
 });
 
 app.post('/posts', (req, res) => {
+
   conn.query(`INSERT INTO posts (title, url, date, creator_id)
   VALUES ((?), (?), (?), (?))`, [req.body.title, req.body.url, Date.now(), req.body.creator_id], (err, rows) => {
     if (err) {
@@ -93,49 +125,28 @@ app.post('/posts', (req, res) => {
       res.status(500).json({ 'error': 'database error' });
       return;
     }
-    console.log(rows);
     res.status(200).json(rows);
   })
 });
 
-app.put('/posts/:id/upvote', (req, res) => {
-  conn.query(`UPDATE posts SET vote_numbers = vote_numbers + 1 WHERE posts.id = (?)`, [req.params.id], (err, rows) => {
+app.put('/posts/vote', (req, res) => {
+  let user = req.query.user;
+  let post = req.query.postId;
+  let vote = req.query.vote;
+  conn.query(`SELECT id FROM votes WHERE user_id = (?) AND post_id = (?);`, [user, post], (err, rows) => {
     if (err) {
       console.log(err.toString());
       res.status(500).json({ 'error': 'database error' });
       return;
     }
-    conn.query(`SELECT posts.id, title, url, date, vote_numbers
-    FROM posts 
-    WHERE posts.id = (?);`, [req.params.id], (err, rows) => {
-      if (err) {
-        console.log(err.toString());
-        res.status(500).json({ 'error': 'database error' });
-        return;
-      }
-      res.status(200).json(rows);
-    })
+    if (rows[0]) {
+      conn.query(`UPDATE votes SET vote = (?) WHERE id = (?);`, [vote, rows[0].id])
+    } else {
+      conn.query(`INSERT INTO votes (post_id, user_id, vote) VALUES ((?), (?), (?))`, [post, user, vote])
+    }
+    res.status(200).redirect('/posts')
   })
 })
 
-app.put('/posts/:id/downvote', (req, res) => {
-  conn.query(`UPDATE posts SET vote_numbers = vote_numbers - 1 WHERE posts.id = (?)`, [req.params.id], (err, rows) => {
-    if (err) {
-      console.log(err.toString());
-      res.status(500).json({ 'error': 'database error' });
-      return;
-    }
-    conn.query(`SELECT posts.id, title, url, date, vote_numbers
-    FROM posts 
-    WHERE posts.id = (?);`, [req.params.id], (err, rows) => {
-      if (err) {
-        console.log(err.toString());
-        res.status(500).json({ 'error': 'database error' });
-        return;
-      }
-      res.status(200).json(rows);
-    })
-  })
-})
 
 app.listen(port);
