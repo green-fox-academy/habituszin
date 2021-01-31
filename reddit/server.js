@@ -130,23 +130,36 @@ app.post('/posts', (req, res) => {
 });
 
 app.put('/posts/vote', (req, res) => {
-  let user = req.query.user;
-  let post = req.query.postId;
-  let vote = req.query.vote;
-  conn.query(`SELECT id FROM votes WHERE user_id = (?) AND post_id = (?);`, [user, post], (err, rows) => {
+  let user = Number(req.query.user);
+  let post = Number(req.query.postId);
+  let vote = Number(req.query.vote);
+
+  conn.query(`SELECT * FROM votes WHERE user_id = (?) AND post_id = (?);`, [user, post], (err, rows) => {
     if (err) {
       console.log(err.toString());
       res.status(500).json({ 'error': 'database error' });
       return;
     }
     if (rows[0]) {
-      conn.query(`UPDATE votes SET vote = (?) WHERE id = (?);`, [vote, rows[0].id])
+      conn.query(`UPDATE votes SET vote = (?) WHERE id = (?);`, [vote, rows[0].id], (err, rows) => {
+        if (err) {
+          console.log(err.toString());
+          res.status(500).json({ 'error': 'database error' });
+          return;
+        }
+        res.status(200)
+      })
     } else {
-      conn.query(`INSERT INTO votes (post_id, user_id, vote) VALUES ((?), (?), (?))`, [post, user, vote])
+      conn.query(`INSERT INTO votes (post_id, user_id, vote) VALUES ((?), (?), (?))`, [post, user, vote], (err, rows) => {
+        if (err) {
+          console.log(err.toString());
+          res.status(500).json({ 'error': 'database error' });
+          return;
+        }
+        res.status(200)
+      })
     }
-    res.status(200).redirect('/posts')
   })
 })
-
 
 app.listen(port);

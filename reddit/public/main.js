@@ -67,9 +67,7 @@ function createPostElement(post) {
     postDownVote.src = downVoteArrows[0]
   }
 
-  postUpVote.addEventListener('click', sendVote(1, postElement));
-  postDownVote.addEventListener('click', sendVote(-1, postElement));
-  
+
   postElement.setAttribute('class', 'postElement');
   postElement.setAttribute('vote', post.vote);
   postElement.setAttribute('id', post.post_id);
@@ -78,7 +76,8 @@ function createPostElement(post) {
   title.setAttribute('href', post.url)
   timer.setAttribute('class', 'timer');
 
-
+  postUpVote.addEventListener('click', () => sendVote(1, postElement, postUpVote, postDownVote));
+  postDownVote.addEventListener('click', () => sendVote(-1, post, postUpVote, postDownVote));
 
   postVote.appendChild(postUpVote);
   postVote.appendChild(postVoteNumber);
@@ -90,11 +89,29 @@ function createPostElement(post) {
   return postElement
 }
 
-function sendVote(vote, post) {
+function sendVote(vote, post, postUpVote, postDownVote) {
   let user = window.localStorage.getItem('id');
+  let sendedVote;
   if (user) {
-    fetch(`http://localhost:3000/posts/vote?user=${user}&postID=${post.id}&vote=${vote}`, {
-      method: 'PUT'
+    console.log(post.vote);
+    if (vote == Number(post)) {
+      sendedVote = 0;
+      postUpVote.src = upVoteArrows[0];
+      postDownVote.src = DownVoteArrows[0];
+    } else if (vote == -1) {
+      sendedVote = -1;
+      postUpVote.src = upVoteArrows[0];
+      postDownVote.src = downVoteArrows[1];
+    } else if (vote == 1) {
+      sendedVote = 1;
+      postUpVote.src = upVoteArrows[1];
+      postDownVote.src = downVoteArrows[0];
+    }
+    fetch(`http://localhost:3000/posts/vote?user=${user}&postId=${post.id}&vote=${sendedVote}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
   } else {
     return
@@ -162,7 +179,7 @@ form.addEventListener('submit', (e) => {
       }
     })
     .catch(err => {
-      console.log('valami baj van');
+      console.log('valami baj van a login');
     })
 })
 
@@ -190,7 +207,7 @@ function changeLogIn(name) {
       .then(localStorage.removeItem('user'))
       .then(localStorage.removeItem('id'))
       .catch(err => {
-        console.log('valami baj van');
+        console.log('valami baj van a domnál');
       })
 
   })
